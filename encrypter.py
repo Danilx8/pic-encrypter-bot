@@ -1,7 +1,8 @@
 from PIL import Image
+import random
 
 # Текст, который нужно закодировать
-text = "Альфред докопался до Миши, чтобы тот ему дал поесть печенье"
+text = "А я и по-русски могу!"
 
 # Получаем последовательность нулей и единиц для текста
 binary_text = ''.join(format(ord(char), 'b').zfill(8) for char in text)
@@ -22,7 +23,10 @@ for x in range(image_width):
     for y in range(image_height):
         if i < len(binary_text):
             bit = int(binary_text[i])
-            color = (255*bit, 255*bit, 255*bit)
+            if bit == 1:
+                color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+            else:
+                color = (255, 255, 255)
             pixels[x, y] = color
             i += 1
 
