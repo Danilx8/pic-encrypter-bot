@@ -8,37 +8,37 @@ namespace pic_encrypter
     {
         static void ConvertToText()
         {
-            Image image = Image.FromFile("text_image.png");
+            Image Image = Image.FromFile("text_image.png");
 
-            Bitmap bitmap = new Bitmap(image);
-            Color color;
+            Bitmap Bitmap = new Bitmap(Image);
+            Color Color;
 
-            string binary_text = "";
-            for (int y = 0; y < bitmap.Height; y++)
+            string Binary_text = "";
+            for (int YCoordinate = 0; YCoordinate < Bitmap.Height; YCoordinate++)
             {
-                for (int x = 0; x < bitmap.Width; x++)
+                for (int XCoordinate = 0; XCoordinate < Bitmap.Width; XCoordinate++)
                 {
-                    color = bitmap.GetPixel(x, y);
-                    if (color.R == 255 && color.G == 255 && color.B == 255)
+                    Color = Bitmap.GetPixel(XCoordinate, YCoordinate);
+                    if (Color.R == 255 && Color.G == 255 && Color.B == 255)
                     {
-                        binary_text += "0";
+                        Binary_text += "0";
                     }
                     else
                     {
-                        binary_text += "1";
+                        Binary_text += "1";
                     }
                 }
             }
 
-            string text = "";
-            for (int i = 0; i < binary_text.Length; i += 8)
+            string Text = "";
+            for (int ByteIndex = 0; ByteIndex < Binary_text.Length; ByteIndex += 8)
             {
-                string byteStr = binary_text.Substring(i, 8);
-                char c = (char)Convert.ToInt32(byteStr, 2);
-                text += c.ToString();
+                string ByteString = Binary_text.Substring(ByteIndex, 8);
+                char Character = (char)Convert.ToInt32(ByteString, 2);
+                Text += Character.ToString();
             }
 
-            Console.WriteLine(text);
+            Console.WriteLine(Text);
         }
     }
 }

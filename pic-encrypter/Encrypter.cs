@@ -8,45 +8,45 @@ namespace pic_encrypter
     {
         static void ConvertToPic(string text)
         {
-            string binary_text = "";
-            foreach (char c in text)
+            string BinaryText = "";
+            foreach (char Character in text)
             {
-                string binary_char = Convert.ToString(c, 2).PadLeft(8, '0');
-                binary_text += binary_char;
+                string BinaryCharacter = Convert.ToString(Character, 2).PadLeft(8, '0');
+                BinaryText += BinaryCharacter;
             }
 
-            int image_width = binary_text.Length / 3 + 1;
-            int image_height = 3;
+            int ImageWidth = BinaryText.Length / 3 + 1;
+            int ImageHeight = 3;
 
-            Bitmap image = new Bitmap(image_width, image_height);
+            Bitmap Image = new Bitmap(ImageWidth, ImageHeight);
 
-            for (int y = 0; y < image_height; y++)
+            for (int YCoordinate = 0; YCoordinate < ImageHeight; YCoordinate++)
             {
-                for (int x = 0; x < image_width; x++)
+                for (int XCoordinate = 0; XCoordinate < ImageWidth; XCoordinate++)
                 {
-                    Color color;
-                    if (binary_text.Length > 0)
+                    Color Color;
+                    if (BinaryText.Length > 0)
                     {
-                        int bit = int.Parse(binary_text.Substring(0, 1));
-                        binary_text = binary_text.Remove(0, 1);
-                        if (bit == 1)
+                        int Bit = int.Parse(BinaryText.Substring(0, 1));
+                        BinaryText = BinaryText.Remove(0, 1);
+                        if (Bit == 1)
                         {
-                            color = Color.FromArgb(new Random().Next(256), new Random().Next(256), new Random().Next(256));
+                            Color = Color.FromArgb(new Random().Next(256), new Random().Next(256), new Random().Next(256));
                         }
                         else
                         {
-                            color = Color.FromArgb(255, 255, 255);
+                            Color = Color.FromArgb(255, 255, 255);
                         }
                     }
                     else
                     {
-                        color = Color.FromArgb(255, 255, 255);
+                        Color = Color.FromArgb(255, 255, 255);
                     }
-                    image.SetPixel(x, y, color);
+                    Image.SetPixel(XCoordinate, YCoordinate, Color);
                 }
             }
 
-            image.Save("text_image.png", System.Drawing.Imaging.ImageFormat.Png);
+            Image.Save("text_image.png", System.Drawing.Imaging.ImageFormat.Png);
         }
     }
 }
