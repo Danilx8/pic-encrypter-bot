@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Text;
 
 namespace pic_encrypter
 {
     class Decrypter
     {
-        static void ConvertToText()
+        public static void ConvertToText(string Path)
         {
-            Image Image = Image.FromFile("text_image.png");
+            Image Image = Image.FromFile(Path + "\\" + "text_image.png");
 
             Bitmap Bitmap = new Bitmap(Image);
             Color Color;
@@ -30,13 +31,14 @@ namespace pic_encrypter
                 }
             }
 
-            string Text = "";
-            for (int ByteIndex = 0; ByteIndex < Binary_text.Length; ByteIndex += 8)
+            byte[] bytes = new byte[Binary_text.Length / 8];
+            for (int i = 0; i < Binary_text.Length; i += 8)
             {
-                string ByteString = Binary_text.Substring(ByteIndex, 8);
-                char Character = (char)Convert.ToInt32(ByteString, 2);
-                Text += Character.ToString();
+                string byteString = Binary_text.Substring(i, 8);
+                bytes[i / 8] = Convert.ToByte(byteString, 2);
             }
+
+            string Text = Encoding.UTF8.GetString(bytes);
 
             Console.WriteLine(Text);
         }

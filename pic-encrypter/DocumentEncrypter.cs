@@ -1,18 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace pic_encrypter
 {
-    class Encrypter
+    internal class DocumentEncrypter: IStrategy<FileStream>
     {
-        static void ConvertToPic(string text)
+        public void CreatePicture(string Path, FileStream File)
         {
             string BinaryText = "";
-            foreach (char Character in text)
+            using (StreamReader Reader = new StreamReader(File))
             {
-                string BinaryCharacter = Convert.ToString(Character, 2).PadLeft(8, '0');
-                BinaryText += BinaryCharacter;
+                int Character;
+                while ((Character = Reader.Read()) != -1)
+                {
+                    string BinaryCharacter = Convert.ToString(Character, 2).PadLeft(8, '0');
+                    BinaryText += BinaryCharacter;
+                }
             }
 
             int ImageWidth = BinaryText.Length / 3 + 1;
@@ -46,7 +54,7 @@ namespace pic_encrypter
                 }
             }
 
-            Image.Save("text_image.png", System.Drawing.Imaging.ImageFormat.Png);
+            Image.Save(Path + "\\" + "text_image.png", System.Drawing.Imaging.ImageFormat.Png);
         }
     }
 }
