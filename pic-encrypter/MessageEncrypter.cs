@@ -4,14 +4,15 @@ using System.Text;
 
 namespace pic_encrypter
 {
-    class MessageEncrypter: IStrategy<string>
+    class MessageEncrypter : IStrategy
     {
         public void CreatePicture(string Path, string Text)
         {
+            byte[] bytes = Encoding.UTF8.GetBytes(Text);
             string BinaryText = "";
-            foreach (char Character in Text)
+            foreach (byte b in bytes)
             {
-                string BinaryCharacter = Convert.ToString(Character, 2).PadLeft(8, '0');
+                string BinaryCharacter = Convert.ToString(b, 2).PadLeft(8, '0');
                 BinaryText += BinaryCharacter;
             }
 

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace pic_encrypter
 {
-    internal class DocumentEncrypter: IStrategy<FileStream>
+    internal class DocumentEncrypter: IStrategy
     {
-        public void CreatePicture(string Path, FileStream File)
+        public void CreatePicture(string Path, string FilePath)
         {
             string BinaryText = "";
-            using (StreamReader Reader = new StreamReader(File))
+            using (StreamReader Reader = new StreamReader(FilePath))
             {
                 int Character;
                 while ((Character = Reader.Read()) != -1)

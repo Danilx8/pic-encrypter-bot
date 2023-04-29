@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace pic_encrypter
 {
-    internal class ChiefEncrypter<T>
+    internal class ChiefEncrypter
     {
-        private IStrategy<T> Strategy;
+        private IStrategy Strategy;
 
-        public void InitializeEncrypting(string Path, T Object)
+        public void SetStrategy(IStrategy NewStrategy)
         {
-            Strategy.CreatePicture(Path, Object);
+            Strategy = NewStrategy;
+        }
+
+        public void InitializeEncrypting(string Path, string FilePath)
+        {
+            Strategy.CreatePicture(Path, FilePath);
         }
     }
 }

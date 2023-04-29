@@ -1,7 +1,7 @@
 ﻿namespace pic_encrypter
 {
-    internal interface IStrategy<T>
+    internal interface IStrategy
     {
-        void CreatePicture(string Path, T Message);
+        void CreatePicture(string Path, string Message);
     }
 }

@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Text;
 
 namespace pic_encrypter
 {
     class Decrypter
     {
-        public static void ConvertToText(string Path)
+        public static void ConvertToText(string PicturePath)
         {
-            Image Image = Image.FromFile(Path + "\\" + "text_image.png");
+            Image Image = Image.FromFile(PicturePath);
 
             Bitmap Bitmap = new Bitmap(Image);
             Color Color;
 
-            string Binary_text = "";
+            StringBuilder TextBuilder = new StringBuilder();
             for (int YCoordinate = 0; YCoordinate < Bitmap.Height; YCoordinate++)
             {
                 for (int XCoordinate = 0; XCoordinate < Bitmap.Width; XCoordinate++)
@@ -22,25 +23,36 @@ namespace pic_encrypter
                     Color = Bitmap.GetPixel(XCoordinate, YCoordinate);
                     if (Color.R == 255 && Color.G == 255 && Color.B == 255)
                     {
-                        Binary_text += "0";
+                        TextBuilder.Append("0");
                     }
                     else
                     {
-                        Binary_text += "1";
+                        TextBuilder.Append("1");
                     }
                 }
             }
 
-            byte[] bytes = new byte[Binary_text.Length / 8];
-            for (int i = 0; i < Binary_text.Length; i += 8)
+            string BinaryText = TextBuilder.ToString();
+
+            byte[] bytes = new byte[(BinaryText.Length + 7) / 8];
+            for (int i = 0; i < bytes.Length; ++i)
             {
-                string byteString = Binary_text.Substring(i, 8);
-                bytes[i / 8] = Convert.ToByte(byteString, 2);
+                string byteString = BinaryText.Substring(i * 8, Math.Min(8, BinaryText.Length - i * 8));
+                bytes[i] = Convert.ToByte(byteString, 2);
             }
+
 
             string Text = Encoding.UTF8.GetString(bytes);
 
-            Console.WriteLine(Text);
+            string TextFilePath = Path.GetDirectoryName(PicturePath) + "\\" + Path.GetFileNameWithoutExtension(PicturePath)
+                + ".txt";
+
+            using (StreamWriter Writer = File.CreateText(TextFilePath))
+            {
+                Writer.WriteLine(Text);
+            }
+
+            Console.WriteLine("File created: " + TextFilePath + "\n" + Text);
         }
     }
 }
