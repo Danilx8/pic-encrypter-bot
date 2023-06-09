@@ -12,8 +12,7 @@ namespace pic_encrypter
             StringBuilder TextBuilder = new StringBuilder();
             foreach (byte b in bytes)
             {
-                string BinaryCharacter = Convert.ToString(b, 2).PadLeft(8, '0');
-                TextBuilder.Append(BinaryCharacter);
+                TextBuilder.Append(Convert.ToString(b, 2).PadLeft(8, '0'));
             }
 
             string BinaryText = TextBuilder.ToString();

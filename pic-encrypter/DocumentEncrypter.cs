@@ -13,14 +13,10 @@ namespace pic_encrypter
         public void CreatePicture(string Path, string FilePath)
         {
             StringBuilder TextBuilder = new StringBuilder();
-            using (StreamReader Reader = new StreamReader(FilePath))
+            byte[] bytes = Encoding.UTF8.GetBytes(File.ReadAllText(FilePath));
+            foreach(byte b in bytes)
             {
-                int Character;
-                while ((Character = Reader.Read()) != -1)
-                {
-                    string BinaryCharacter = Convert.ToString(Character, 2).PadLeft(8, '0');
-                    TextBuilder.Append(BinaryCharacter);
-                }
+                TextBuilder.Append(Convert.ToString(b, 2).PadLeft(8, '0'));
             }
 
             string BinaryText = TextBuilder.ToString();
