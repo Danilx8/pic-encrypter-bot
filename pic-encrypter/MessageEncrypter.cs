@@ -9,12 +9,14 @@ namespace pic_encrypter
         public void CreatePicture(string Path, string Text)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(Text);
-            string BinaryText = "";
+            StringBuilder TextBuilder = new StringBuilder();
             foreach (byte b in bytes)
             {
                 string BinaryCharacter = Convert.ToString(b, 2).PadLeft(8, '0');
-                BinaryText += BinaryCharacter;
+                TextBuilder.Append(BinaryCharacter);
             }
+
+            string BinaryText = TextBuilder.ToString();
 
             int ImageWidth = BinaryText.Length / 3 + 1;
             int ImageHeight = 3;

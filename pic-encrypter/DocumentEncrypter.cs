@@ -12,16 +12,18 @@ namespace pic_encrypter
     {
         public void CreatePicture(string Path, string FilePath)
         {
-            string BinaryText = "";
+            StringBuilder TextBuilder = new StringBuilder();
             using (StreamReader Reader = new StreamReader(FilePath))
             {
                 int Character;
                 while ((Character = Reader.Read()) != -1)
                 {
                     string BinaryCharacter = Convert.ToString(Character, 2).PadLeft(8, '0');
-                    BinaryText += BinaryCharacter;
+                    TextBuilder.Append(BinaryCharacter);
                 }
             }
+
+            string BinaryText = TextBuilder.ToString();
 
             int ImageWidth = BinaryText.Length / 3 + 1;
             int ImageHeight = 3;
