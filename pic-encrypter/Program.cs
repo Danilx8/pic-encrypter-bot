@@ -7,10 +7,10 @@ namespace pic_encrypter
         static void Main(string[] args)
         {
             ChiefEncrypter Encrypter= new ChiefEncrypter();
-            int ChosenOption = 0;
+            int ChosenOption;
             do
             {
-                string Path = "";
+                string Path;
                 Console.WriteLine("Слова в Картинки\n1 - Преобразовать сообщение в картинку\n2 - Преобразовать " +
                     "документ в картинку\n3 - Преобразовать картинку в текст\n4 - Выйти");
                 ChosenOption = 0;
@@ -20,9 +20,13 @@ namespace pic_encrypter
                     {
                         ChosenOption = Convert.ToInt32(Console.ReadLine());
                     }
-                    catch (Exception e)
+                    catch (FormatException)
                     {
                         Console.WriteLine("Опция выбрана неверно");
+                    }
+                    catch (OverflowException)
+                    {
+                        Console.WriteLine("Слишком большой ввод");
                     }
                 }
 
